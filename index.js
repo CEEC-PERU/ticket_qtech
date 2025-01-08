@@ -24,8 +24,7 @@ app.use((req, res, next) => {
 });
 
 // Crear evaluaciones
-app.use('/api/auth', require('./src/routes/auth/auth-route'));
-app.use('/api/appsession', require('./src/routes/users/appSessionRoutes'));
+app.use('/api/appsession', require('./src/routes/users/appSessioinRoutes.js'));
 app.use('/api/auth', require('./src/routes/auth/auth-route.js'));
 
 SocketService(server);

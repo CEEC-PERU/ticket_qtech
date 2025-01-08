@@ -1,6 +1,7 @@
 // models/DetailManagement.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { sequelize } = require('../config/database');
+
 const TypeManagement = require('./TypeManagement');
 
 const DetailManagement = sequelize.define('DetailManagement', {
