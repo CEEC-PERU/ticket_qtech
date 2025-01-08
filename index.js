@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 // Crear evaluaciones
 app.use('/api/appsession', require('./src/routes/users/appSessioinRoutes.js'));
 app.use('/api/auth', require('./src/routes/auth/auth-route.js'));
-
+app.use('/api/users', require('./src/routes/users/userRoute.js'));
 SocketService(server);
 
 

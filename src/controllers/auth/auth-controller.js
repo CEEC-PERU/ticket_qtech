@@ -3,8 +3,8 @@ const { authService } = require("../../services/auth/auth-service.js");
 
 exports.authUser = async function(req, res) {
     try {
-        const { dni, password } = req.body;
-        const result = await authService({ dni, password });
+        const { email, password } = req.body;
+        const result = await authService({ email, password });
 
         if (result.code === 401)
             return res.status(401).json({ msg: result.msg, possibleAttemps: result.possibleAttemps });

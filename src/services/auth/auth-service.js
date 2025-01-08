@@ -3,15 +3,16 @@ const { JWT_SECRET } = require("../../config/env.js");
 const User = require("../../models/User.js");
 const { handleFailedLoginAttempt, resetFailedLoginAttempts } = require("../../utils/limitAttempts.js");
 
-exports.authService = async function({ dni, password }) {
+exports.authService = async function({ email, password }) {
     try {
-        const userFound = await User.findOne({ where: { dni } });
+        const userFound = await User.findOne({ where: { email } });
         if (!userFound)
             return { code: 401, msg: "Usuario ó Contraseña inválida" };
 
         if (userFound.is_blocked) {
             return { code: 401, msg: 'Cuenta bloqueada' };
         }
+
 
         const matchPassword = await User.comparePassword(
             password,
@@ -30,8 +31,8 @@ exports.authService = async function({ dni, password }) {
             {
                 id: userFound.user_id,
                 role: userFound.role_id,
-                dni: userFound.dni,
-                enterprise_id: userFound.enterprise_id,
+                email: userFound.email,
+                is_active: userFound.is_active,
                 loginTime: new Date()
             },
             JWT_SECRET,
