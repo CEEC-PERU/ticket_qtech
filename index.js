@@ -27,6 +27,10 @@ app.use((req, res, next) => {
 app.use('/api/appsession', require('./src/routes/users/appSessioinRoutes.js'));
 app.use('/api/auth', require('./src/routes/auth/auth-route.js'));
 app.use('/api/users', require('./src/routes/users/userRoute.js'));
+app.use('/api/typeclients', require('./src/routes/client/typeClientRoute.js'));
+app.use('/api/campaigns', require('./src/routes/client/campaignRoute.js'));
+app.use('/api/typemanagement', require('./src/routes/management/typeManagementRoute.js'));
+app.use('/api/detailmanagement', require('./src/routes/management/detailManagementRoute.js'));
 SocketService(server);
 
 

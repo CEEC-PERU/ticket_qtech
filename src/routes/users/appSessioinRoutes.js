@@ -5,5 +5,4 @@ const authenticateToken = require('../../middlewares/authenticationMiddleware');
 
 router.get('/', authenticateToken, appSessionController.getAppSessions);
 
-
 module.exports = router;
