@@ -66,6 +66,7 @@ DetailManagement.hasMany(Request, {
   as: 'requests',
 });
 
+
 // AdminTicket and Request
 AdminTicket.belongsTo(Request, { foreignKey: 'request_id', as: 'request' });
 Request.hasMany(AdminTicket, { foreignKey: 'request_id', as: 'adminTickets' });

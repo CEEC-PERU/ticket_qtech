@@ -3,20 +3,20 @@ const TypeClient = require('../../models/TypeClient');
 
 const getAllCampaigns = async () => {
   return await Campaign.findAll({
-    include: [{ model: TypeClient, attributes: ['name'] }], // Relación con TypeClient
+    include: [{ model: TypeClient, attributes: ['name'] , as: 'client' }], // Relación con TypeClient
   });
 };
 
 const getCampaignById = async (id) => {
   return await Campaign.findByPk(id, {
-    include: [{ model: TypeClient, attributes: ['name'] }],
+    include: [{ model: TypeClient, attributes: ['name'] , as: 'client' }],
   });
 };
 
 const getCampaignsByClientId = async (client_id) => {
   return await Campaign.findAll({
     where: { client_id },
-    include: [{ model: TypeClient, attributes: ['name'] }],
+    include: [{ model: TypeClient, attributes: ['name'] , as: 'client' }],
   });
 };
 
