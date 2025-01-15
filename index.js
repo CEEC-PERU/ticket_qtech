@@ -31,6 +31,7 @@ app.use('/api/typeclients', require('./src/routes/client/typeClientRoute.js'));
 app.use('/api/campaigns', require('./src/routes/client/campaignRoute.js'));
 app.use('/api/typemanagement', require('./src/routes/management/typeManagementRoute.js'));
 app.use('/api/detailmanagement', require('./src/routes/management/detailManagementRoute.js'));
+app.use('/api/ticket', require('./src/routes/ticket/requestRoute.js'));
 SocketService(server);
 
 

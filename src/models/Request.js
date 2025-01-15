@@ -1,10 +1,11 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
-
 const User = require('./User');
 const Campaign = require('./Campaign');
 const DetailManagement = require('./DetailManagement');
 const State = require('./State');
+const TypeClient = require('./TypeClient');
+const TypeManagement = require('./TypeManagement');
 
 const Request = sequelize.define('Request', {
   request_id: {
@@ -12,7 +13,7 @@ const Request = sequelize.define('Request', {
     primaryKey: true,
     autoIncrement: true,
   },
-  tittle: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -30,6 +31,22 @@ const Request = sequelize.define('Request', {
     references: {
       model: DetailManagement,
       key: 'det_management_id',
+  }
+  },
+  client_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: TypeClient,
+      key: 'client_id',
+  }
+  },
+  management_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: TypeManagement,
+      key: 'management_id',
   }
   },
   user_id: {
@@ -51,10 +68,6 @@ const Request = sequelize.define('Request', {
       model: State,
       key: 'state_id',
   }
-  },
-  fecha_creacion: {
-    type: DataTypes.DATE,
-    allowNull: false,
   },
   number_ticket: {
     type: DataTypes.INTEGER,

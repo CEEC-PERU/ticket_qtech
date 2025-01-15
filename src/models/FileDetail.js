@@ -1,8 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
 
-
-
 const FileDetail = sequelize.define('File_Detail', {
     id_file: {
       type: DataTypes.INTEGER,

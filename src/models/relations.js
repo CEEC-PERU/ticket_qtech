@@ -52,6 +52,12 @@ TypeClient.hasMany(Campaign, { foreignKey: 'client_id', as: 'campaigns' });
 Campaign.hasMany(Request, { foreignKey: 'campaign_id', as: 'requests' });
 Request.belongsTo(Campaign, { foreignKey: 'campaign_id', as: 'campaign' });
 
+TypeClient.hasMany(Request, { foreignKey: 'client_id'});
+Request.belongsTo(TypeClient, { foreignKey: 'client_id' });
+
+TypeManagement.hasMany(Request, { foreignKey: 'management_id'});
+Request.belongsTo(TypeManagement, { foreignKey: 'management_id' });
+
 // Request and State
 Request.belongsTo(State, { foreignKey: 'state_id', as: 'state' });
 State.hasMany(Request, { foreignKey: 'state_id', as: 'requests' });
@@ -88,6 +94,15 @@ DetailRequest.hasMany(FileDetail, {
   foreignKey: 'id_det_request',
   as: 'fileDetails',
 });
+
+DetailRequest.belongsTo(Request, {
+  foreignKey: 'request_id',
+});
+
+Request.hasMany(DetailRequest, {
+  foreignKey: 'request_id',
+});
+
 
 // DetailManagement and TypeManagement
 DetailManagement.belongsTo(TypeManagement, {
