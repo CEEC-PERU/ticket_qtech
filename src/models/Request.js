@@ -6,7 +6,7 @@ const DetailManagement = require('./DetailManagement');
 const State = require('./State');
 const TypeClient = require('./TypeClient');
 const TypeManagement = require('./TypeManagement');
-
+const notificationService = require('../services/ticket/notificationService');
 const Request = sequelize.define('Request', {
   request_id: {
     type: DataTypes.INTEGER,
@@ -78,6 +78,11 @@ const Request = sequelize.define('Request', {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
   tableName: 'requests',
+  hooks: {
+    async afterCreate(request, options) {
+      await notificationService.notifyAdmins(request); // Llamar al servicio de notificación
+    },
+  },
 });
 
 module.exports = Request;

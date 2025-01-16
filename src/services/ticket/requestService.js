@@ -54,7 +54,7 @@ const createRequest = async (data, files) => {
     );
 
     await FileDetail.bulkCreate(fileDetails);
-
+console.log(newRequest.number_ticket)
     // Return response with ticket number and the request details
     return {
       message: 'Request created successfully',
