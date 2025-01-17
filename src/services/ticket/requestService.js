@@ -28,7 +28,7 @@ const createRequest = async (data, files) => {
       client_id: numericClientId,
       det_management_id: numericDetailManagementId,
       active: true,
-      state_id: 1, // Default state
+      state_id: 5, // Default state
       number_ticket: Math.floor(Math.random() * 1000000), // Random ticket number
       user_id: numericUserId, // Replace with real user_id
     });
