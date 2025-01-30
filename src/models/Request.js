@@ -6,6 +6,7 @@ const DetailManagement = require('./DetailManagement');
 const State = require('./State');
 const TypeClient = require('./TypeClient');
 const TypeManagement = require('./TypeManagement');
+const Level = require('./Level');
 const notificationService = require('../services/ticket/notificationService');
 const Request = sequelize.define('Request', {
   request_id: {
@@ -67,6 +68,14 @@ const Request = sequelize.define('Request', {
     references: {
       model: State,
       key: 'state_id',
+  }
+  },
+  level_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Level,
+      key: 'level_id',
   }
   },
   number_ticket: {

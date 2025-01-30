@@ -33,6 +33,7 @@ app.use('/api/typemanagement', require('./src/routes/management/typeManagementRo
 app.use('/api/detailmanagement', require('./src/routes/management/detailManagementRoute.js'));
 app.use('/api/ticket', require('./src/routes/ticket/requestRoute.js'));
 app.use('/api/admin-managements', require('./src/routes/management/adminManagementRoute.js'));
+app.use('/api/levels', require('./src/routes/states/levelRoute.js'));
 
 SocketService(server);
 

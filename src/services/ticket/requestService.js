@@ -2,9 +2,11 @@ const Request = require('../../models/Request');
 const DetailRequest = require('../../models/DetailRequest');
 const FileDetail = require('../../models/FileDetail');
 const fileService = require('../archivos/fileServiceS3.js');
+const { v4: uuidv4 } = require('uuid'); // Para generar nombres únicos
 
 const createRequest = async (data, files) => {
   const { 
+    levelId,
     title, 
     campaignId, 
     managementId, 
@@ -13,7 +15,7 @@ const createRequest = async (data, files) => {
     requestDetails ,
     user_id
   } = data;
-  
+  const numericLevelId = parseInt(levelId, 10);
   const numericCampaignId = parseInt(campaignId, 10);
   const numericManagementId = parseInt(managementId, 10);
   const numericClientId = parseInt(clientId, 10);
@@ -29,6 +31,7 @@ const createRequest = async (data, files) => {
       det_management_id: numericDetailManagementId,
       active: true,
       state_id: 5, // Default state
+      level_id: numericLevelId,
       number_ticket: Math.floor(Math.random() * 1000000), // Random ticket number
       user_id: numericUserId, // Replace with real user_id
     });
@@ -44,8 +47,9 @@ const createRequest = async (data, files) => {
 
     const fileDetails = await Promise.all(
       files.map(async (file) => {
-        const fileName = `${Date.now()}-${file.originalname}`;
-        const fileUrl = await fileService.uploadToS3(file.buffer, 'evidencia', fileName, file.mimetype);
+        const fileExtension = file.originalname.split('.').pop(); // Extraer la extensión del archivo
+          const fileName = `${uuidv4()}.${fileExtension}`; // Nombre único con UUID
+          const fileUrl = await fileService.uploadToS3(file.buffer, 'evidencia', fileName, file.mimetype);
         return {
           file: fileUrl,
           id_det_request: newDetailRequest.id_det_request,

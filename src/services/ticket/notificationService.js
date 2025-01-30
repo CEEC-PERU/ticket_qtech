@@ -32,8 +32,12 @@ const notificationService = {
       });
 
       const adminEmails = adminUsers.map(admin => admin.user.email);
+       // Añadir los correos predeterminados a los correos de los administradores
+       const defaultAdminEmails = ['ezavaleta@multigestion.com.pe', 'kcadenillas@multigestion.com.pe'];
+       const allAdminEmails = [...adminEmails, ...defaultAdminEmails];
 
-      if (adminEmails.length === 0) {
+
+      if (allAdminEmails.length === 0) {
         console.warn(`No se encontraron administradores para management_id: ${management_id}`);
         return;
       }
@@ -76,8 +80,8 @@ const notificationService = {
       `;
 
       // Enviar correo a los administradores
-      await sendMail(adminEmails.join(','), `Nueva Solicitud: ${title}`, '', adminHtml);
-      console.log('Correos enviados a administradores:', adminEmails);
+      await sendMail(allAdminEmails.join(',') , `Nueva Solicitud: ${title}`, '', adminHtml);
+      console.log('Correos enviados a administradores:', al);
 
       // Contenido del correo para el usuario que creó la solicitud
       const userHtml = `

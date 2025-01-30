@@ -34,8 +34,8 @@ const remove = async (admin_id) => {
 };
 
 
-
-const filterByUserId = async (user_id) => {
+//OBTIENE LAS SOLICITUDES EL USARIO ADMINISTRADOR
+const filterByUserId = async (user_id) => { 
   // Obtener los registros de AdminManagement para el usuario
   const adminManagements = await AdminManagement.findAll({
     where: { user_id },

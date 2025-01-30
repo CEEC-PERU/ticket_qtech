@@ -13,8 +13,20 @@ const DetailManagement = require('./DetailManagement');
 const Campaign = require('./Campaign');
 const AppSession = require('./AppSession');
 const AdminManagement = require('./AdminManagement');
+const Level = require('./Level');
 
 // Define Associations
+
+//Level
+
+// Un Request pertenece a un solo Level
+Request.belongsTo(Level, {
+  foreignKey: 'level_id'
+});
+
+Level.hasMany(Request, {
+  foreignKey: 'level_id'
+});
 
 // User and Role
 User.belongsTo(Role, { foreignKey: 'role_id', as: 'role' });
