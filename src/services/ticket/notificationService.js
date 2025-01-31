@@ -33,7 +33,7 @@ const notificationService = {
 
       const adminEmails = adminUsers.map(admin => admin.user.email);
        // Añadir los correos predeterminados a los correos de los administradores
-       const defaultAdminEmails = ['ezavaleta@multigestion.com.pe', 'kcadenillas@multigestion.com.pe'];
+       const defaultAdminEmails = ['', ''];
        const allAdminEmails = [...adminEmails, ...defaultAdminEmails];
 
 

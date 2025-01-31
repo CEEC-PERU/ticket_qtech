@@ -1,6 +1,7 @@
 const Request = require('../../models/Request');
 const DetailRequest = require('../../models/DetailRequest');
 const FileDetail = require('../../models/FileDetail');
+const AdminTicket = require('../../models/AdminTicket.js');
 const fileService = require('../archivos/fileServiceS3.js');
 const { v4: uuidv4 } = require('uuid'); // Para generar nombres únicos
 
@@ -74,4 +75,19 @@ console.log(newRequest.number_ticket)
 };
 
 
-module.exports = { createRequest };
+const updateRequestservice = async (request_id, updateData) => {
+  try {
+    const request = await Request.findByPk(request_id);
+    if (!request) {
+      throw new Error('Solicitud no encontrada');
+    }
+
+    await request.update(updateData);
+    return request;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+
+module.exports = { createRequest , updateRequestservice };

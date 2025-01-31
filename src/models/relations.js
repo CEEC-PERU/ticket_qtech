@@ -14,10 +14,15 @@ const Campaign = require('./Campaign');
 const AppSession = require('./AppSession');
 const AdminManagement = require('./AdminManagement');
 const Level = require('./Level');
+const Rejection = require('./Rejection');
 
 // Define Associations
 
 //Level
+
+// Relación con Rejection (1 solicitud puede tener 1 o más rechazos)
+Request.hasMany(Rejection, { foreignKey: 'request_id' });
+Rejection.belongsTo(Request, { foreignKey: 'request_id' });
 
 // Un Request pertenece a un solo Level
 Request.belongsTo(Level, {

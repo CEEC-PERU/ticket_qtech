@@ -82,6 +82,15 @@ const Request = sequelize.define('Request', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  is_aproved: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  attention_time: {
+    type: DataTypes.STRING, // Usamos STRING para almacenar "2 horas" o "3 días"
+    allowNull: true, 
+  },
 }, {
   timestamps: true,
   createdAt: 'created_at',

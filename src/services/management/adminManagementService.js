@@ -9,6 +9,7 @@ const State = require('../../models/State');
 const TypeClient = require('../../models/TypeClient');
 const TypeManagement = require('../../models/TypeManagement');
 const User = require('../../models/User');
+const AdminTicket = require('../../models/AdminTicket');
 const getAll = async () => {
   return await AdminManagement.findAll();
 };
@@ -96,6 +97,25 @@ const filterByUserId = async (user_id) => {
                     model: FileDetail,
                     attributes: ['file'],
                     as: 'fileDetails',
+                  },
+                ],
+              },
+              {
+                model: AdminTicket,
+                attributes: ['user_id'],
+                as: 'adminTickets',
+                include: [
+                  {
+                    model: User,
+                    attributes: ['email'],
+                    as: 'adminUser' ,
+                    include: [
+                      {
+                        model: Profile,
+                        attributes: ['name' , 'lastname'],
+                        as: 'profile' 
+                      },
+                    ],
                   },
                 ],
               },
