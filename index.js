@@ -34,6 +34,7 @@ app.use('/api/detailmanagement', require('./src/routes/management/detailManageme
 app.use('/api/ticket', require('./src/routes/ticket/requestRoute.js'));
 app.use('/api/admin-managements', require('./src/routes/management/adminManagementRoute.js'));
 app.use('/api/levels', require('./src/routes/states/levelRoute.js'));
+app.use('/api/rejection', require('./src/routes/ticket/rejectionRoute.js'));
 
 SocketService(server);
 

@@ -19,6 +19,8 @@ const Rejection = require('./Rejection');
 // Define Associations
 
 //Level
+User.hasMany(Rejection, { foreignKey: 'user_id'});
+Rejection.belongsTo(User, { foreignKey: 'user_id'});
 
 // Relación con Rejection (1 solicitud puede tener 1 o más rechazos)
 Request.hasMany(Rejection, { foreignKey: 'request_id' });
