@@ -6,6 +6,6 @@ const router = express.Router();
 
 
 // Route to update DetailRequest and upload files
-router.put('/update-detail/:requestId',  upload, updateDetailRequestController); // 'files' is the field name for the files
+router.put('/update-detail/:requestId',  upload, updateDetailRequestController); 
 
 module.exports = router;
