@@ -2,8 +2,17 @@ const Request = require('../../models/Request');
 const DetailRequest = require('../../models/DetailRequest');
 const FileDetail = require('../../models/FileDetail');
 const AdminTicket = require('../../models/AdminTicket.js');
+const Campaign = require('../../models/Campaign');
+const DetailManagement = require('../../models/DetailManagement');
+const Profile = require('../../models/Profile');
+const State = require('../../models/State');
+const TypeClient = require('../../models/TypeClient');
+const TypeManagement = require('../../models/TypeManagement');
+const User = require('../../models/User');
+const Level = require('../../models/Level.js');
 const fileService = require('../archivos/fileServiceS3.js');
 const { v4: uuidv4 } = require('uuid'); // Para generar nombres únicos
+const Rejection = require('../../models/Rejection.js');
 
 const createRequest = async (data, files) => {
   const { 
@@ -89,5 +98,109 @@ const updateRequestservice = async (request_id, updateData) => {
   }
 };
 
+const updateStateRequestService = async (request_id, state_id) => {
+  try {
+    const request = await Request.findByPk(request_id);
+    if (!request) {
+      throw new Error('Solicitud no encontrada');
+    }
 
-module.exports = { createRequest , updateRequestservice };
+    await request.update({ state_id });
+    return request;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+
+const getRequestsByUserId = async (user_id) => {
+  try {
+    const requests = await Request.findAll({
+      where: { user_id },include: [
+        {
+          model: User,
+          attributes: ['email'],
+          as: 'user',
+          include: [
+            {
+              model: Profile,
+              attributes: ['name', 'lastname'],
+              as: 'profile'
+            },
+          ],
+        },
+        {
+          model: State,
+          attributes: ['name'],
+          as: 'state'
+        },
+        {
+          model: Level,
+          attributes: ['name'],
+        },
+        {
+          model: TypeClient,
+          attributes: ['name'],
+        },
+        {
+          model: Campaign,
+          attributes: ['name'],
+         as: 'campaign'
+        },
+        {
+          model: TypeManagement,
+          attributes: ['name'],
+        },
+        {
+          model: DetailManagement,
+          attributes: ['name'],
+          as: 'detailManagement',
+        },
+        {
+          model: DetailRequest,
+          attributes: ['detail_name'],
+          include: [
+            {
+              model: FileDetail,
+              attributes: ['file'],
+              as: 'fileDetails',
+            },
+          ],
+        },
+        {
+          model: AdminTicket,
+          attributes: ['user_id'],
+          as: 'adminTickets',
+          include: [
+            {
+              model: User,
+              attributes: ['email'],
+              as: 'adminUser' ,
+              include: [
+                {
+                  model: Profile,
+                  attributes: ['name' , 'lastname'],
+                  as: 'profile' 
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: Rejection,
+          attributes: ['reason'],
+        },
+        
+
+      ],
+      order: [['created_at', 'DESC']], // Ordena por fecha de creación descendente
+    });
+
+    return requests;
+  } catch (error) {
+    console.error('Error al obtener las solicitudes por usuario:', error);
+    throw new Error('Error al obtener las solicitudes');
+  }
+};
+
+module.exports = { createRequest , updateRequestservice , updateStateRequestService , getRequestsByUserId};
