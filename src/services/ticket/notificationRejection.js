@@ -69,6 +69,7 @@ const notificationRejectionService = {
           <p>Hola <strong>${adminName}</strong>,</p>
           <p>Has rechazado la solicitud con ID <strong>${request_id}</strong> enviada por <strong>${solicitanteName}</strong>.</p>
           <p><strong>Razón del rechazo:</strong> ${reason}</p>
+              <p><strong>Link de Web : </strong> https://ticket-front-knnb.vercel.app/login </p>
         </div>
       `;
 

@@ -103,6 +103,10 @@ const notificationService = {
               <td style="padding: 5px 10px;">Fecha de Creación:</td>
               <td>${created_at}</td>
             </tr>
+             <tr>
+              <td style="padding: 5px 10px;">Fecha de Creación:</td>
+              <td>https://ticket-front-knnb.vercel.app/login</td>
+            </tr>
           </table>
           <p style="font-size: 16px; margin-top: 20px;">Gracias por usar nuestra plataforma.</p>
           <p style="font-size: 14px; color: #555;">Saludos,<br>Plataforma de Tickets</p>
