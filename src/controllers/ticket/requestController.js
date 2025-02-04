@@ -3,6 +3,7 @@ const { createRequest ,  updateRequestservice, updateStateRequestService, getReq
 const AdminTicket = require('../../models/AdminTicket.js');
 const Request = require('../../models/Request.js');
 const { get } = require('http');
+
 const submitRequest = async (req, res) => {
   try {
     const requestData = req.body; // Datos enviados en el cuerpo

@@ -4,7 +4,6 @@ const { updateDetailRequestController } = require('../../controllers/ticket/deta
 
 const router = express.Router();
 
-
 // Route to update DetailRequest and upload files
 router.put('/update-detail/:requestId',  upload, updateDetailRequestController); 
 
