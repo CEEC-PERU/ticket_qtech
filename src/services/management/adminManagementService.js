@@ -9,7 +9,9 @@ const State = require('../../models/State');
 const TypeClient = require('../../models/TypeClient');
 const TypeManagement = require('../../models/TypeManagement');
 const User = require('../../models/User');
+const Level = require('../../models/Level');
 const AdminTicket = require('../../models/AdminTicket');
+const Rejection = require('../../models/Rejection');
 const getAll = async () => {
   return await AdminManagement.findAll();
 };
@@ -79,6 +81,14 @@ const filterByUserId = async (user_id) => {
                 model: Campaign,
                 attributes: ['name'],
                as: 'campaign'
+              },
+              {
+                model: Level,
+                attributes: ['name'],
+              },
+              {
+                model: Rejection,
+                attributes: ['reason'],
               },
               {
                 model: TypeManagement,

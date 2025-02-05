@@ -1,6 +1,8 @@
 // userService.js
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 const bcrypt = require('bcrypt');
+const { Op } = require('sequelize');
 
 
 async function createUser(userData) {
@@ -12,6 +14,34 @@ async function createUser(userData) {
     throw new Error('Error al crear el usuario');
   }
 }
+
+
+
+const createUserAndProfile = async (userData, profileData) => {
+  try {
+    // Hash de la contraseña
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+
+    // Creación del usuario
+    const user = await User.create({
+      email: userData.email,
+      password: hashedPassword,
+      role_id: userData.role_id, // Asegúrate de que role_id esté en userData
+    });
+
+    // Crear perfil para el usuario
+    const profile = await Profile.create({
+      user_id: user.user_id,
+      name: profileData.name,
+      lastname: profileData.lastname,
+    });
+
+    return { user, profile };
+  } catch (error) {
+    throw new Error('Error al crear el usuario o el perfil');
+  }
+};
+
 
 //crea varios ususarios
 
@@ -48,4 +78,4 @@ async function deleteUser(userId) {
 
 
 
-module.exports = {createUser, getUserById, updateUser, deleteUser , createUsers  }
+module.exports = {createUser, getUserById, updateUser, deleteUser , createUsers , createUserAndProfile }
