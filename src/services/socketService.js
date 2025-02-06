@@ -13,6 +13,7 @@ const SocketService = (server) => {
         cors: {
             origin: [
                 "http://localhost:3000",
+                "https://ticket-front-knnb.vercel.app"
             ],
             methods: ["GET", "POST", "PUT"]
         }
