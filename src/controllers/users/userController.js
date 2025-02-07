@@ -1,5 +1,5 @@
 const userService = require('../../services/users/userService');
-
+const User = require('../../models/User');
 const registerUser = async (req, res) => {
   const { email, password, role_id, name, lastname } = req.body;
 
