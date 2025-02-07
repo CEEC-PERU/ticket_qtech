@@ -77,5 +77,32 @@ async function deleteUser(userId) {
 
 
 
+const getUserWithProfile = async (userId) => {
+  try {
+    const user = await User.findOne({
+      attributes: ['user_id', 'email', 'role_id', 'is_active'],
+      where: { user_id: userId },
+      include: [{
+        model: Profile,
+        attributes: ['name', 'lastname'],
+        as: 'profile',
+        required: true, // Esto asegura que solo se devuelvan los usuarios que tengan perfil
+      }],
+    });
 
-module.exports = {createUser, getUserById, updateUser, deleteUser , createUsers , createUserAndProfile }
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+
+
+
+module.exports = {createUser, getUserById, updateUser, deleteUser , createUsers , createUserAndProfile , getUserWithProfile }

@@ -1,5 +1,21 @@
 const userService = require('../../services/users/userService');
 const User = require('../../models/User');
+
+
+const getUser = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await userService.getUserWithProfile(userId);
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
 const registerUser = async (req, res) => {
   const { email, password, role_id, name, lastname } = req.body;
 
@@ -99,4 +115,4 @@ async function deleteUser(req, res) {
 }
 
 
-module.exports = { createUser,  updateUser, deleteUser , createUsersController , registerUser}
+module.exports = { createUser,  updateUser, deleteUser , createUsersController , registerUser , getUser}
