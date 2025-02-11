@@ -16,6 +16,42 @@ async function createUser(userData) {
 }
 
 
+const updatePassword = async (userId, oldPassword, newPassword) => {
+  // Buscar al usuario por su ID
+  const user = await User.findOne({ where: { user_id: userId } });
+
+  if (!user) {
+    throw new Error('Usuario no encontrado');
+  }
+
+  // Verificar la contraseña actual
+  const isMatch = await User.comparePassword(oldPassword, user.password);
+  if (!isMatch) {
+    throw new Error('La contraseña actual es incorrecta');
+  }
+
+  // Validar que la nueva contraseña sea diferente
+  if (oldPassword === newPassword) {
+    throw new Error('La nueva contraseña no puede ser la misma que la anterior');
+  }
+
+    // Verificar que la nueva contraseña cumpla con ciertos requisitos de seguridad
+    if (newPassword.length < 8) {
+      throw new Error('La nueva contraseña debe tener al menos 8 caracteres');
+    }
+
+    
+  // Encriptar la nueva contraseña
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  // Actualizar la contraseña del usuario
+  await user.update({ password: hashedPassword });
+
+  return 'Contraseña actualizada correctamente';
+};
+
+
+
 
 const createUserAndProfile = async (userData, profileData) => {
   try {
@@ -105,4 +141,4 @@ const getUserWithProfile = async (userId) => {
 
 
 
-module.exports = {createUser, getUserById, updateUser, deleteUser , createUsers , createUserAndProfile , getUserWithProfile }
+module.exports = {createUser, getUserById, updateUser, deleteUser , createUsers , createUserAndProfile , getUserWithProfile , updatePassword}

@@ -15,6 +15,25 @@ const getUser = async (req, res) => {
 };
 
 
+const updatePassword = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({ message: 'Por favor ingrese ambas contraseñas' });
+    }
+
+    const message = await userService.updatePassword(userId, oldPassword, newPassword);
+    return res.status(200).json({ message });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+
+
+
 
 const registerUser = async (req, res) => {
   const { email, password, role_id, name, lastname } = req.body;
@@ -115,4 +134,4 @@ async function deleteUser(req, res) {
 }
 
 
-module.exports = { createUser,  updateUser, deleteUser , createUsersController , registerUser , getUser}
+module.exports = { createUser,  updateUser, deleteUser , createUsersController , registerUser , getUser , updatePassword}
