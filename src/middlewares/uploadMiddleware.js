@@ -44,6 +44,6 @@ const upload = multer({
       cb(new Error(`Invalid file type: ${file.mimetype}. Only the following types are allowed: ${allowedTypes.join(', ')}.`));
     }
   },
-}).fields([{ name: 'materials', maxCount: 20 }]); // Maximum of 20 files
+}).fields([{ name: 'materials', maxCount: 40 }]); // Maximum of 20 files
 
 module.exports = upload;
