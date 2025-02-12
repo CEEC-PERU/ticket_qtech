@@ -66,7 +66,7 @@ const updateRequest = async (req, res) => {
 
 
 
-
+//PROCESO 
 const updateRequestState = async (req, res) => {
   const { request_id } = req.params;
   const { state_id } = req.body;
@@ -117,6 +117,7 @@ const updateRequestState = async (req, res) => {
   }
 };
 
+//FINALIZADO
 const updateRequestStateFinalizado = async (req, res) => {
   const { request_id } = req.params;
   const { state_id } = req.body;
