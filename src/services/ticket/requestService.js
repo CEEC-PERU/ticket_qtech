@@ -112,6 +112,21 @@ const updateStateRequestService = async (request_id, state_id) => {
   }
 };
 
+const updateStateRequestService2 = async (request_id, state_id) => {
+  try {
+    const request = await Request.findByPk(request_id);
+    if (!request) {
+      throw new Error('Solicitud no encontrada');
+    }
+
+    await request.update({ state_id });
+    return request;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+
 
 const getRequestsByUserId = async (user_id) => {
   try {
@@ -203,4 +218,4 @@ const getRequestsByUserId = async (user_id) => {
   }
 };
 
-module.exports = { createRequest , updateRequestservice , updateStateRequestService , getRequestsByUserId};
+module.exports = {updateStateRequestService2, createRequest , updateRequestservice , updateStateRequestService , getRequestsByUserId};

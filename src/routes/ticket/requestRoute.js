@@ -1,5 +1,5 @@
 const express = require('express');
-const { submitRequest , updateRequest , updateRequestState , getRequestsByUser } = require('../../controllers/ticket/requestController');
+const { submitRequest , updateRequest , updateRequestState ,updateRequestStateFinalizado, getRequestsByUser } = require('../../controllers/ticket/requestController');
 const upload = require('./../../middlewares/uploadMiddleware');
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.put('/update/:request_id/:user_id', updateRequest);
 
 router.put('/state/:request_id', updateRequestState);
 
+router.put('/finish/state/datos/:request_id', updateRequestStateFinalizado);
 
 router.get('/user/:user_id', getRequestsByUser);
 

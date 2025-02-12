@@ -18,15 +18,15 @@ const Time_ticket = sequelize.define('Time_ticket', {
         key: 'adminticket_id',
       },
     },
-    time_leido: {
+    time_pendiente: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    time_inicio: {
+    time_proceso: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    time_finish: {
+    time_finalizado: {
       type: DataTypes.DATE,
       allowNull: true,
     },
