@@ -21,6 +21,7 @@ const upload = multer({
       'image/svg+xml', // SVG
       'application/zip', // ZIP
       'application/x-rar-compressed', // RAR
+      'application/x-zip-compressed', // ZIP (agregado para permitir este tipo también)
       'application/json', // JSON
       'application/javascript', // JS
       'application/rtf', // RTF
@@ -37,9 +38,10 @@ const upload = multer({
     ];
     
     if (allowedTypes.includes(file.mimetype)) {
-      cb(null, true);
+      cb(null, true); // El tipo de archivo es válido
     } else {
-      cb(new Error('Invalid file type. Only PDFs and images are allowed.'));
+      // Mejorar el mensaje de error para mostrar el tipo MIME que se rechazó
+      cb(new Error(`Invalid file type: ${file.mimetype}. Only the following types are allowed: ${allowedTypes.join(', ')}.`));
     }
   },
 }).fields([{ name: 'materials', maxCount: 20 }]); // Maximum of 20 files
