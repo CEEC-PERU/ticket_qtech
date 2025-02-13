@@ -75,6 +75,7 @@ const notificationService = {
             </tr>
           </table>
           <p style="font-size: 16px; margin-top: 20px;">Por favor, revisa la plataforma para más información.</p>
+           <p><strong>Link de Web : </strong> https://ticket-front-knnb.vercel.app/login </p>
           <p style="font-size: 14px; color: #555;">Saludos,<br>Plataforma de Tickets</p>
         </div>
       `;
@@ -109,6 +110,7 @@ const notificationService = {
             </tr>
           </table>
           <p style="font-size: 16px; margin-top: 20px;">Gracias por usar nuestra plataforma.</p>
+           <p><strong>Link de Web : </strong> https://ticket-front-knnb.vercel.app/login </p>
           <p style="font-size: 14px; color: #555;">Saludos,<br>Plataforma de Tickets</p>
         </div>
       `;

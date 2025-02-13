@@ -3,6 +3,8 @@ const { createRequest , updateStateRequestService2, updateRequestservice, update
 const AdminTicket = require('../../models/AdminTicket.js');
 const Request = require('../../models/Request.js');
 const TimeTicket = require('../../models/TimeTicket.js');
+const userNotificationService = require('../../services/ticket/notificationFinishService.js');
+const userNotificationProceso = require('../../services/ticket/notificationProcesoService');
 const { get } = require('http');
 
 const submitRequest = async (req, res) => {
@@ -66,6 +68,7 @@ const updateRequest = async (req, res) => {
 
 
 
+
 //PROCESO 
 const updateRequestState = async (req, res) => {
   const { request_id } = req.params;
@@ -106,6 +109,7 @@ const updateRequestState = async (req, res) => {
 
     // Paso 5: Actualizar el estado de la solicitud
     const updatedRequest = await updateStateRequestService(request_id, state_id);
+    await userNotificationProceso.notifyUserProceso(request_id, currentDate);
     // Responder con éxito
     res.status(200).json({
       message: 'Estado de la solicitud y TimeTicket actualizados correctamente.',
@@ -157,6 +161,11 @@ const updateRequestStateFinalizado = async (req, res) => {
 
     // Paso 5: Actualizar el estado de la solicitud
     const updatedRequest = await updateStateRequestService2(request_id, state_id);
+
+
+    await userNotificationService.notifyUserFinalized(request_id, currentDate);
+// Paso 6: Devolver la respuesta
+
     // Responder con éxito
     res.status(200).json({
       message: 'Estado de la solicitud y TimeTicket actualizados correctamente.',
@@ -194,3 +203,5 @@ const getRequestsByUser = async (req, res) => {
 
 
 module.exports = { updateRequestStateFinalizado, submitRequest , updateRequest , updateRequestState , getRequestsByUser};
+
+
