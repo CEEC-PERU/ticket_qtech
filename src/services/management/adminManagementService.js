@@ -11,7 +11,9 @@ const TypeManagement = require('../../models/TypeManagement');
 const User = require('../../models/User');
 const Level = require('../../models/Level');
 const AdminTicket = require('../../models/AdminTicket');
+const TimeTicket = require('../../models/TimeTicket');
 const Rejection = require('../../models/Rejection');
+
 const getAll = async () => {
   return await AdminManagement.findAll();
 };
@@ -127,6 +129,12 @@ const filterByUserId = async (user_id) => {
                       },
                     ],
                   },
+                  {
+                    model: TimeTicket,
+                    attributes: ['time_pendiente', 'time_proceso', 'time_finalizado'],
+                    as: 'timeTickets' ,
+                  },
+
                 ],
               },
 
@@ -152,3 +160,5 @@ module.exports = {
   filterByUserId,
   filterByManagementId,
 };
+
+

@@ -3,7 +3,6 @@ const { sequelize } = require('../config/database');
 
 const AdminTicket = require('./AdminTicket');
 
-
 const Time_ticket = sequelize.define('Time_ticket', {
     time_id: {
       type: DataTypes.INTEGER,
@@ -35,4 +34,4 @@ const Time_ticket = sequelize.define('Time_ticket', {
     tableName: 'time_tickets',
   });
 
-  module.exports = Time_ticket;
+module.exports = Time_ticket;

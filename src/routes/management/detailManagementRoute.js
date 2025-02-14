@@ -11,3 +11,6 @@ router.put('/:id',authenticateToken, detailManagementController.updateDetailMana
 router.delete('/:id',authenticateToken, detailManagementController.deleteDetailManagement);
 
 module.exports = router;
+
+
+
