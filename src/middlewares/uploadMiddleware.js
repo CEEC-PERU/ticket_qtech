@@ -3,7 +3,7 @@ const storage = multer.memoryStorage(); // Store files in memory as buffers
 
 const upload = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // Limit to 10MB
+  limits: {  }, // Limit to 10MB
   fileFilter: (req, file, cb) => {
     
     const allowedTypes = [
@@ -11,6 +11,7 @@ const upload = multer({
       'image/png', // PNG
       'image/jpeg', // JPG, JPEG
       'application/vnd.ms-excel', // XLS
+      'application/vnd.ms-excel.sheet.binary.macroEnabled.12', // XLSB
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // XLSX
       'text/csv', // CSV
       'application/vnd.ms-powerpoint', // PPT
