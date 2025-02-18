@@ -11,7 +11,7 @@ const upload = multer({
       'image/png', // PNG
       'image/jpeg', // JPG, JPEG
       'application/vnd.ms-excel', // XLS
-      'application/vnd.ms-excel.sheet.binary.macroEnabled.12', // XLSB
+      'application/vnd.ms-excel.sheet.binary.macroenabled.12',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // XLSX
       'text/csv', // CSV
       'application/vnd.ms-powerpoint', // PPT
