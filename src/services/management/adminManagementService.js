@@ -44,7 +44,7 @@ const filterByUserId = async (user_id) => {
   // Obtener los registros de AdminManagement para el usuario
   const adminManagements = await AdminManagement.findAll({
     where: { user_id },
-    attributes: ['management_id'], // Solo necesitamos los management_id
+    attributes: ['management_id', 'campaign_id'], // Solo necesitamos los management_id
   });
 
   // Extraer los management_id en un array
@@ -54,9 +54,15 @@ const filterByUserId = async (user_id) => {
     return []; // Retornar un array vacío si no hay management_id
   }
 
-  // Buscar los Request asociados a esos management_id
+  const campaignIds = adminManagements.map((item) => item.campaign_id);
+
+  if (campaignIds.length === 0) {
+    return []; // Retornar un array vacío si no hay management_id
+  }
+
+  // Buscar los Request asociados a esos management_id y campaignIds
   const requests = await Request.findAll({
-    where: { management_id: managementIds },
+    where: { management_id: managementIds, campaign_id : campaignIds },
     include: [
               {
                 model: User,

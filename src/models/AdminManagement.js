@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
 const TypeManagement = require('./TypeManagement');
 const User = require('./User');
+const Campaign = require('./Campaign');
 
 const AdminManagement = sequelize.define('AdminManagement', {
   admin_id: {
@@ -25,6 +26,14 @@ const AdminManagement = sequelize.define('AdminManagement', {
           key: 'management_id',
         },
   },
+  campaign_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+          model: Campaign,
+          key: 'campaign_id',
+        },
+  },
 }, {
   timestamps: true,
   createdAt: 'created_at',
@@ -33,3 +42,4 @@ const AdminManagement = sequelize.define('AdminManagement', {
 });
 
 module.exports = AdminManagement;
+
