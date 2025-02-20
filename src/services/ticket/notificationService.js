@@ -6,11 +6,11 @@ const { sendMail } = require('../../utils/mailer');
 const notificationService = {
   async notifyAdmins(request) {
     try {
-      const { title, management_id, number_ticket, created_at, user_id } = request;
+      const { title, management_id, number_ticket, created_at, user_id, campaign_id} = request;
 
       // Filtrar administradores relacionados con el `management_id`
       const adminUsers = await AdminManagement.findAll({
-        where: { management_id },
+        where: { management_id , campaign_id},
         include: [
           {
             model: User,
