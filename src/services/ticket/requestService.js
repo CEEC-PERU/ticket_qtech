@@ -8,6 +8,7 @@ const Profile = require('../../models/Profile');
 const State = require('../../models/State');
 const TypeClient = require('../../models/TypeClient');
 const TypeManagement = require('../../models/TypeManagement');
+const TimeTicket = require('../../models/TimeTicket.js');
 const User = require('../../models/User');
 const Level = require('../../models/Level.js');
 const fileService = require('../archivos/fileServiceS3.js');
@@ -15,15 +16,15 @@ const { v4: uuidv4 } = require('uuid'); // Para generar nombres únicos
 const Rejection = require('../../models/Rejection.js');
 
 const createRequest = async (data, files) => {
-  const { 
+  const {
     levelId,
-    title, 
-    campaignId, 
-    managementId, 
-    clientId, 
-    detailManagementId, 
-    requestDetails ,
-    user_id
+    title,
+    campaignId,
+    managementId,
+    clientId,
+    detailManagementId,
+    requestDetails,
+    user_id,
   } = data;
   const numericLevelId = parseInt(levelId, 10);
   const numericCampaignId = parseInt(campaignId, 10);
@@ -34,7 +35,7 @@ const createRequest = async (data, files) => {
 
   try {
     const newRequest = await Request.create({
-      title : title,
+      title: title,
       campaign_id: numericCampaignId,
       management_id: numericManagementId,
       client_id: numericClientId,
@@ -58,8 +59,13 @@ const createRequest = async (data, files) => {
     const fileDetails = await Promise.all(
       files.map(async (file) => {
         const fileExtension = file.originalname.split('.').pop(); // Extraer la extensión del archivo
-          const fileName = `${uuidv4()}.${fileExtension}`; // Nombre único con UUID
-          const fileUrl = await fileService.uploadToS3(file.buffer, 'evidencia', fileName, file.mimetype);
+        const fileName = `${uuidv4()}.${fileExtension}`; // Nombre único con UUID
+        const fileUrl = await fileService.uploadToS3(
+          file.buffer,
+          'evidencia',
+          fileName,
+          file.mimetype
+        );
         return {
           file: fileUrl,
           id_det_request: newDetailRequest.id_det_request,
@@ -68,7 +74,7 @@ const createRequest = async (data, files) => {
     );
 
     await FileDetail.bulkCreate(fileDetails);
-console.log(newRequest.number_ticket)
+    console.log(newRequest.number_ticket);
     // Return response with ticket number and the request details
     return {
       message: 'Request created successfully',
@@ -82,7 +88,6 @@ console.log(newRequest.number_ticket)
     throw new Error('Error creating request');
   }
 };
-
 
 const updateRequestservice = async (request_id, updateData) => {
   try {
@@ -126,12 +131,11 @@ const updateStateRequestService2 = async (request_id, state_id) => {
   }
 };
 
-
-
 const getRequestsByUserId = async (user_id) => {
   try {
     const requests = await Request.findAll({
-      where: { user_id },include: [
+      where: { user_id },
+      include: [
         {
           model: User,
           attributes: ['email'],
@@ -140,14 +144,14 @@ const getRequestsByUserId = async (user_id) => {
             {
               model: Profile,
               attributes: ['name', 'lastname'],
-              as: 'profile'
+              as: 'profile',
             },
           ],
         },
         {
           model: State,
           attributes: ['name'],
-          as: 'state'
+          as: 'state',
         },
         {
           model: Level,
@@ -160,7 +164,7 @@ const getRequestsByUserId = async (user_id) => {
         {
           model: Campaign,
           attributes: ['name'],
-         as: 'campaign'
+          as: 'campaign',
         },
         {
           model: TypeManagement,
@@ -190,14 +194,19 @@ const getRequestsByUserId = async (user_id) => {
             {
               model: User,
               attributes: ['email'],
-              as: 'adminUser' ,
+              as: 'adminUser',
               include: [
                 {
                   model: Profile,
-                  attributes: ['name' , 'lastname'],
-                  as: 'profile' 
+                  attributes: ['name', 'lastname'],
+                  as: 'profile',
                 },
               ],
+            },
+            {
+              model: TimeTicket,
+              attributes: ['time_pendiente', 'time_proceso', 'time_finalizado'],
+              as: 'timeTickets',
             },
           ],
         },
@@ -205,8 +214,6 @@ const getRequestsByUserId = async (user_id) => {
           model: Rejection,
           attributes: ['reason'],
         },
-        
-
       ],
       order: [['created_at', 'DESC']], // Ordena por fecha de creación descendente
     });
@@ -218,4 +225,10 @@ const getRequestsByUserId = async (user_id) => {
   }
 };
 
-module.exports = {updateStateRequestService2, createRequest , updateRequestservice , updateStateRequestService , getRequestsByUserId};
+module.exports = {
+  updateStateRequestService2,
+  createRequest,
+  updateRequestservice,
+  updateStateRequestService,
+  getRequestsByUserId,
+};
