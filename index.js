@@ -16,10 +16,13 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Expose-Headers", "X-FileName");
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Expose-Headers', 'X-FileName');
   next();
 });
 
@@ -29,16 +32,31 @@ app.use('/api/auth', require('./src/routes/auth/auth-route.js'));
 app.use('/api/users', require('./src/routes/users/userRoute.js'));
 app.use('/api/typeclients', require('./src/routes/client/typeClientRoute.js'));
 app.use('/api/campaigns', require('./src/routes/client/campaignRoute.js'));
-app.use('/api/typemanagement', require('./src/routes/management/typeManagementRoute.js'));
-app.use('/api/detailmanagement', require('./src/routes/management/detailManagementRoute.js'));
+app.use(
+  '/api/typemanagement',
+  require('./src/routes/management/typeManagementRoute.js')
+);
+app.use(
+  '/api/detailmanagement',
+  require('./src/routes/management/detailManagementRoute.js')
+);
 app.use('/api/ticket', require('./src/routes/ticket/requestRoute.js'));
-app.use('/api/admin-managements', require('./src/routes/management/adminManagementRoute.js'));
+app.use(
+  '/api/admin-managements',
+  require('./src/routes/management/adminManagementRoute.js')
+);
 app.use('/api/levels', require('./src/routes/states/levelRoute.js'));
 app.use('/api/rejection', require('./src/routes/ticket/rejectionRoute.js'));
-app.use('/api/detailrequest', require('./src/routes/ticket/detailRequestRoute.js'));
+app.use(
+  '/api/detailrequest',
+  require('./src/routes/ticket/detailRequestRoute.js')
+);
+app.use(
+  '/api/superadmin',
+  require('./src/routes/superadmin/superadminRoute.js')
+);
 
 SocketService(server);
-
 
 server.listen(PORT, () => {
   console.log(`Server is running 🚀`);
@@ -46,4 +64,3 @@ server.listen(PORT, () => {
 
 console.log('EMAIL_USER:', process.env.EMAIL_USER);
 console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD);
-

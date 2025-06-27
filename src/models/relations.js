@@ -16,7 +16,7 @@ const AdminManagement = require('./AdminManagement');
 const Level = require('./Level');
 const Rejection = require('./Rejection');
 
-// Define Associations
+// Define Associations  
 
 //Level
 User.hasMany(Rejection, { foreignKey: 'user_id'});
