@@ -3,9 +3,8 @@ const storage = multer.memoryStorage(); // Store files in memory as buffers
 
 const upload = multer({
   storage,
-  limits: {  }, // Limit to 10MB
+  limits: {}, // Limit to 10MB
   fileFilter: (req, file, cb) => {
-    
     const allowedTypes = [
       'application/pdf', // PDF
       'image/png', // PNG
@@ -22,6 +21,8 @@ const upload = multer({
       'image/svg+xml', // SVG
       'application/zip', // ZIP
       'application/x-rar-compressed', // RAR
+      'application/x-compressed', // Algunos navegadores reportan RAR así
+      'application/x-rar', // Otra variante menos común
       'application/x-zip-compressed', // ZIP (agregado para permitir este tipo también)
       'application/json', // JSON
       'application/javascript', // JS
@@ -37,12 +38,18 @@ const upload = multer({
       'application/x-7z-compressed', // 7Z
       'application/x-bzip2', // BZ2
     ];
-    
+
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true); // El tipo de archivo es válido
     } else {
       // Mejorar el mensaje de error para mostrar el tipo MIME que se rechazó
-      cb(new Error(`Invalid file type: ${file.mimetype}. Only the following types are allowed: ${allowedTypes.join(', ')}.`));
+      cb(
+        new Error(
+          `Invalid file type: ${
+            file.mimetype
+          }. Only the following types are allowed: ${allowedTypes.join(', ')}.`
+        )
+      );
     }
   },
 }).fields([{ name: 'materials', maxCount: 40 }]); // Maximum of 20 files
