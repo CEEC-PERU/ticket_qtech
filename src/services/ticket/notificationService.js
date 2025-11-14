@@ -8,6 +8,9 @@ const notificationService = {
     try {
       const { title, management_id, number_ticket, created_at, user_id, campaign_id} = request;
 
+      // Info de la campaña Entel
+      const isEntelCampaign = campaign_id === 10;
+
       // Filtrar administradores relacionados con el `management_id`
       const adminUsers = await AdminManagement.findAll({
         where: { management_id , campaign_id},
@@ -35,6 +38,8 @@ const notificationService = {
        // Añadir los correos predeterminados a los correos de los administradores
        const defaultAdminEmails = ['kcadenillas@multigestion.com.pe', 'ezavaleta@multigestion.com.pe'];
        const allAdminEmails = [...adminEmails, ...defaultAdminEmails];
+
+      const ccEmails = isEntelCampaign ? 'nsilvera@a365.com.pe,fatuncar@a365.com.pe,fcarranza@asistencia365.com.pe' : null;
 
 
       if (allAdminEmails.length === 0) {
@@ -81,8 +86,8 @@ const notificationService = {
       `;
 
       // Enviar correo a los administradores
-      await sendMail(allAdminEmails.join(',') , `Nueva Solicitud: ${title}`, '', adminHtml);
-      console.log('Correos enviados a administradores:', al);
+      await sendMail(allAdminEmails.join(',') , `Nueva Solicitud: ${title}`, '', adminHtml, ccEmails);
+      console.log('Correos enviados a administradores:', allAdminEmails);
 
       // Contenido del correo para el usuario que creó la solicitud
       const userHtml = `
