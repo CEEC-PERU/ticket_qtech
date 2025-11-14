@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendMail = async (to, subject, text ,html, cc = null) => {
+const sendMail = async (to, subject, text ,html) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to,
@@ -18,10 +18,6 @@ const sendMail = async (to, subject, text ,html, cc = null) => {
         html
     };
 
-    // agregar cc solo si se existe
-    if (cc) {
-        mailOptions.cc = cc;
-    }
 
     try {
         await transporter.sendMail(mailOptions);
